@@ -13,36 +13,57 @@ Basically a 2nd brain that becomes your 1st brain because the actual 1st brain i
 it's desribed by
 
 - a content ingestion process
-- a visualisation tool
+- tools to access data and visualise
 - a set of heterogeneous content types
 
 # ingest process
 
-can drop a file from existing document
+this is where we populate the database
 
-can write a quick note via a template, e.g. obsidian
+- can drop a file from existing document
+- can write a quick note via a template, e.g. obsidian
+- can add a tag for something that happened, e.g. like oura
+- can ingest a feed of content from outer sources, e.g. health tracking, photos, etc. (see content types)
 
-can add a tag for something that happened, e.g. like oura
+# access
 
-# visualisation
+this is where we consult the database
+
+## querying
+
+I should be able to ask questions and receive context back, e.g.
+
+- when did I meet this person? how do I know this person? the response is not just a date, it's the context that created that connection
+- what do I know about energy saving in residential properties?
+- when did we visit the Maldives? was it when Valentina changed job? what was I doing by then?
+
+## visualisation
 
 I should be able to zoom in and out, activate or deactivate layers (looking at connections? life events? work stuff? everything?), see what I'm sharing with whom
 
-it's a line and a graph but it's not a line and a graph, it's more like a connected graph that evolves through a timeline. the nodes are rich text, images, maybe a music background if it's not too much
+It should be a timeline and a connected graph all at once, not just a line and or just a graph, it's more like a connected graph that evolves through a timeline.
+
+Results of a query showing both the notes and how they're connected through time, I should be able to enable/disable context so that specific layers can be shown or hidden. The nodes are rich text, images, maybe a music background if it's not too much
 
 # content types
 
 this is roughly organised by priority of supported content. if you run a plan with claude, this should be phased by must have, should have, nice to have
 
-## personal notes
+## notes
 
 this is probably the bulk of content, must have
 
-- can be private, hyper private (encrypted, not even myself can read unless explicitly decrypted), public, shared with 1 person or a group of people (related to timeline visualisation, photos, etc.)
+- can be private, hyper private (encrypted, not even myself can read unless explicitly decrypted), public, shared with 1 person or a group of people (related to timeline visualisation, photos, etc.), publicly shared (e.g. on social media)
 
-- can be work related, or other type of content, e.g. personal thoughts, recipes, life logs, meals (kind of "restaurant visited"), spot instances like tags (e.g. restless legs)
+- can be work related, or other type of content, e.g. personal thoughts, recipes, life logs, meals (kind of "restaurant visited"), spot instances like tags (e.g. restless legs). But can also be completely unrelated just to put things in perspective (e.g. a flood in Nepal happened these days) or somehow partially related (e.g. a link to an article talking about the AI bubble and the decision to divest from a semiconductors ETF)
+
+- the context allows to put things into perspective: notes that are closest to myself are related my life day to day, but when I add information on "wider" things, the context is used to enrich decisions, change the lens from narrow to wide, from micro to macro
 
 - should define time granularity: sometimes things happen on a specific day, or moment. most times, they cover a time span that is not clearly defined. think "wgd": a period of illness, some fuzzy events like being in hospital, and a specific date of decease 
+
+- should have connections through time and create a context, e.g. "ukraine war" is a generic note with a period in time that starts in a month and doesn't have an end (at the moment of this writing) and "ukraine war starts" is a specific date, they belong to the same context but have different time granularity
+
+- content is not static, can be changed, and should keep a log of changes (something I haven't touched in years, or something that keeps being updated), it should always be possible to understand if something has gone through a revision history, like a git log of the file
 
 ## connections
 
@@ -50,7 +71,7 @@ linkedin data type of content, but with context, e.g. do I know this person, is 
 
 ## bookmarks
 
-knowledge has context, a bookmark I make today bears a different meaning from one I made while doing something different, but both carry the same intention (I want to remember or explore this) and maybe connected (something I bookmark today, relates to something I bookmarked 5 years ago, I should be able to have that tada! moment)
+knowledge has context, a bookmark I make today bears a different meaning from one I made while doing something different, but both carry the same intention (I want to remember or explore this) and may be connected (something I bookmark today, relates to something I bookmarked 5 years ago, I should be able to have that tada! moment)
 
 ## health tracker
 
@@ -61,3 +82,18 @@ import (or connect?) sleep information, activities, meals (kind of "calory / pro
 ## photos
 
 an image is worth a thousand words, everybody taking pictures, the challenge is connecting these to the flow, it should be naturally integrated, but not duplicated. start with photos, but possibly embed
+
+# implementation
+
+I would probably start with the bear minimum that allows ingestion and consultation on a local device
+
+- an obsidian vault
+- a well defined set of frontmatter fields (that can potentially change as the project evolves) and folder structure
+- an LLM process to ingest + access data, probably as a plugin of the vault
+- an obsidian visualisation plugin
+- a minimal set of tools to ingest external feeds (e.g. oura API)
+- possibly treated as a git repository so content creation retains history 
+
+problem: obsidian and git are very good at light text-based content, less so with images
+
+next iteration would be to put this online, accessible via web / mobile
