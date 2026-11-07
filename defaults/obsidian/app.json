@@ -1,0 +1,7 @@
+{
+  "attachmentFolderPath": "attachments",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "inbox",
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false
+}

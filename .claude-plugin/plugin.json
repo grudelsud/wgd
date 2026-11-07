@@ -1,0 +1,6 @@
+{
+  "name": "wgd",
+  "version": "0.1.0",
+  "description": "Turn an Obsidian vault into a lifelog: typed frontmatter on a timeline, capture, ask and backfill.",
+  "author": { "name": "grudelsud" }
+}

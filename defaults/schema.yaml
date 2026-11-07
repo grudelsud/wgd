@@ -1,0 +1,96 @@
+# wgd schema: the source of truth for this vault's content types.
+# Edit by hand or with /wgd:add-type, then re-render with scripts/render.py.
+#
+# Field kinds:
+#   date      partial ISO 8601: 2024 | 2024-03 | 2024-03-12 | 2024-03-12T10:00
+#             (fields with `ongoing: true` also accept the word "ongoing")
+#   datetime  2024-03-12T10:00
+#   text, url, bool
+#   enum      one of `values`
+#   list      list of free strings
+#   links     list of quoted wiki-links, e.g. ["[[Valentina]]"]; `target` is the linked note's type
+#
+# A type's `fields` add new fields or override keys of a common field.
+# `folder` may use {yyyy} and {mm}, taken from `start`.
+
+version: 1
+
+exclude:            # paths (relative to the vault) never treated as wgd content
+  - templates
+  - inbox
+  - attachments
+  - views
+  - CLAUDE.md
+  - CONTRIBUTING.md
+  - README.md
+
+common:
+  type:
+    kind: enum      # values are the type names below
+    required: true
+  start:
+    kind: date
+    required: true
+    description: when it happened or began
+  end:
+    kind: date
+    ongoing: true
+    description: when it ended; omit for a point in time, "ongoing" if it has not ended
+  approx:
+    kind: bool
+    description: true when start/end are fuzzy
+  layer:
+    kind: enum
+    values: [life, work, health, knowledge, world]
+    required: true
+    description: life areas from personal (life) to macro events (world)
+  contexts:
+    kind: links
+    target: context
+  people:
+    kind: links
+    target: person
+  visibility:
+    kind: enum
+    values: [private, shared, public]   # "sealed" is reserved for encrypted notes (not yet supported)
+    default: private
+    required: true
+  shared_with:
+    kind: links
+    target: person
+    required_if: {visibility: shared}
+  source:
+    kind: text
+    default: manual
+    required: true
+    description: manual | file | backfill | <feed name>
+  source_ref:
+    kind: text
+    description: original path, URL or feed id
+  created:
+    kind: datetime
+    required: true
+    description: when the item entered the vault (not when it happened)
+  tags:
+    kind: list
+
+types:
+  note:
+    description: the default type, anything that happened, was thought or was saved; a bookmark is a note with a url
+    folder: "notes/{yyyy}"
+    default_layer: life
+    fields:
+      url:
+        kind: url
+  context:
+    description: a span of time that groups notes, e.g. "Ukraine war" (2022-02, ongoing) or "Grandma's illness"
+    folder: contexts
+    default_layer: life
+  person:
+    description: someone you know; start is when you met
+    folder: people
+    default_layer: life
+    fields:
+      start:
+        required: false
+        description: when you first met

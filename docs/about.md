@@ -8,7 +8,7 @@ being illuminated, reaching "nirvana" through connected knowledge (yes, being sa
 
 No in actuality is a bit more than that, it's a tiny boost to your memory and knowledge, allows to see things in perspective, make connections where you can't see them, or refresh connections that you forgot.
 
-Basically a 2nd brain that becomes your 1st brain because the actual 1st brain is failing.
+Basically a "2nd brain" (gawd I'm tired of this definition) that becomes your 1st brain because the actual 1st brain is failing. Shall we call it [fried brain](https://www.reddit.com/r/firenze/comments/1jh404s/places_with_fried_brain/)?
 
 it's desribed by
 
@@ -82,18 +82,3 @@ import (or connect?) sleep information, activities, meals (kind of "calory / pro
 ## photos
 
 an image is worth a thousand words, everybody taking pictures, the challenge is connecting these to the flow, it should be naturally integrated, but not duplicated. start with photos, but possibly embed
-
-# implementation
-
-I would probably start with the bear minimum that allows ingestion and consultation on a local device
-
-- an obsidian vault
-- a well defined set of frontmatter fields (that can potentially change as the project evolves) and folder structure
-- an LLM process to ingest + access data, probably as a plugin of the vault
-- an obsidian visualisation plugin
-- a minimal set of tools to ingest external feeds (e.g. oura API)
-- possibly treated as a git repository so content creation retains history 
-
-problem: obsidian and git are very good at light text-based content, less so with images
-
-next iteration would be to put this online, accessible via web / mobile
